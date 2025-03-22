@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Demo · Phoenix Framework</title>
+    <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"}>
+
+    <!-- Set token in a script tag in the head for earlier execution -->
+    <script>
+      window.userToken = "<%= assigns[:current_user] && Phoenix.Token.sign(ChatappWeb.Endpoint, "user socket", assigns[:current_user].id) %>";
+      console.log("User token set:", window.userToken);
+    </script>
+  </head>
+  <body>
+    <main role="main" class="container">
+      <.flash_group flash={@flash} />
+      <%= @inner_content %>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}></script>
+  </body>
+</html>
