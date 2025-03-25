@@ -34,8 +34,10 @@ defmodule ChatappWeb.UserLoginLive do
   end
 
   def mount(_params, _session, socket) do
-    username = Phoenix.Flash.get(socket.assigns.flash, :username)
-    form = to_form(%{"username" => username}, as: "user")
+    # Create the form with default empty values without relying on flash
+    form = to_form(%{"username" => "", "password" => ""}, as: "user")
+
+  # Assign the form to the socket
     {:ok, assign(socket, form: form), temporary_assigns: [form: form]}
   end
 end

@@ -1,3 +1,10 @@
+<!-- If you're using a standard Phoenix view -->
+<div class="logout-container">
+  <.form :let={f} for={%{}} action="/users/log_out" method="delete">
+  <button type="submit">Log out</button>
+  </.form>
+</div>
+
 <div id="chat-area">
   <div id='message-list' class='row'>
   </div>

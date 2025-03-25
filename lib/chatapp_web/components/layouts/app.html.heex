@@ -9,7 +9,7 @@
 
     <!-- Set token in a script tag in the head for earlier execution -->
     <script>
-      window.userToken = "<%= @user_token %>";
+      window.userToken = "<%= assigns[:user_token] || "" %>";
       console.log("User token set:", window.userToken);
       
     </script>
