@@ -3,7 +3,7 @@ defmodule Chatapp.Accounts.User do
   import Ecto.Changeset
 
   schema "users" do
-    field :email, :string
+    field :username, :string
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :current_password, :string, virtual: true, redact: true
@@ -37,17 +37,17 @@ defmodule Chatapp.Accounts.User do
   """
   def registration_changeset(user, attrs, opts \\ []) do
     user
-    |> cast(attrs, [:email, :password])
-    |> validate_email(opts)
+    |> cast(attrs, [:username, :password])
+    |> validate_username(opts)
     |> validate_password(opts)
   end
 
-  defp validate_email(changeset, opts) do
+  defp validate_username(changeset, opts) do
     changeset
-    |> validate_required([:email])
-    |> validate_format(:email, ~r/^[^\s]+@[^\s]+$/, message: "must have the @ sign and no spaces")
-    |> validate_length(:email, max: 160)
-    |> maybe_validate_unique_email(opts)
+    |> validate_required([:username])
+    |> validate_length(:username, min: 3, max: 20)
+    |> validate_format(:username, ~r/^[a-zA-Z0-9_]+$/, message: "only letters, numbers, and underscores allowed")
+    |> maybe_validate_unique_username(opts)
   end
 
   defp validate_password(changeset, opts) do
@@ -76,30 +76,16 @@ defmodule Chatapp.Accounts.User do
     end
   end
 
-  defp maybe_validate_unique_email(changeset, opts) do
-    if Keyword.get(opts, :validate_email, true) do
+  defp maybe_validate_unique_username(changeset, opts) do
+    if Keyword.get(opts, :validate_username, true) do
       changeset
-      |> unsafe_validate_unique(:email, Chatapp.Repo)
-      |> unique_constraint(:email)
+      |> unsafe_validate_unique(:username, Chatapp.Repo)
+      |> unique_constraint(:username)
     else
       changeset
     end
   end
 
-  @doc """
-  A user changeset for changing the email.
-
-  It requires the email to change otherwise an error is added.
-  """
-  def email_changeset(user, attrs, opts \\ []) do
-    user
-    |> cast(attrs, [:email])
-    |> validate_email(opts)
-    |> case do
-      %{changes: %{email: _}} = changeset -> changeset
-      %{} = changeset -> add_error(changeset, :email, "did not change")
-    end
-  end
 
   @doc """
   A user changeset for changing the password.

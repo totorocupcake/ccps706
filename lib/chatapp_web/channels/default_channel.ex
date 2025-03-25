@@ -27,8 +27,12 @@ defmodule ChatappWeb.DefaultChannel do
   end
 
   def handle_in("new_message", payload, socket) do
-    spawn(fn -> save_message(payload) end)
-    broadcast(socket, "new_message", payload)
+    user = Chatapp.Accounts.get_user!(socket.assigns.user_id)
+    enhanced_payload = Map.put(payload, "name", user.username)
+
+    spawn(fn -> save_message(enhanced_payload) end)
+    broadcast(socket, "new_message", enhanced_payload)
+
     {:noreply, socket}
   end
 
@@ -46,7 +50,15 @@ defmodule ChatappWeb.DefaultChannel do
     Chatapp.Message.recent_messages()
     |> Enum.each(fn msg -> push(socket, "new_message", format_msg(msg)) end)
 
-    push(socket, "new_message", %{name: "System", message: "Joined the chat"})
+    username = case socket.assigns.user_id do
+      user_id when is_integer(user_id) ->
+        user = Chatapp.Accounts.get_user!(user_id)
+        user.username
+      _ ->
+        "Someone"
+    end
+
+    push(socket, "new_message", %{name: "System", message: "#{username} joined the chat"})
 
     {:noreply, socket}
   end

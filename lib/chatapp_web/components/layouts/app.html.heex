@@ -9,8 +9,9 @@
 
     <!-- Set token in a script tag in the head for earlier execution -->
     <script>
-      window.userToken = "<%= assigns[:current_user] && Phoenix.Token.sign(ChatappWeb.Endpoint, "user socket", assigns[:current_user].id) %>";
+      window.userToken = "<%= @user_token %>";
       console.log("User token set:", window.userToken);
+      
     </script>
   </head>
   <body>

@@ -56,32 +56,16 @@ defmodule ChatappWeb.Router do
       live "/users/register", UserRegistrationLive, :new
       post "/users/register", UserRegistrationController, :create
       live "/users/log_in", UserLoginLive, :new
-      live "/users/reset_password", UserForgotPasswordLive, :new
-      live "/users/reset_password/:token", UserResetPasswordLive, :edit
     end
 
     post "/users/log_in", UserSessionController, :create
   end
 
-  scope "/", ChatappWeb do
-    pipe_through [:browser, :require_authenticated_user]
-
-    live_session :require_authenticated_user,
-      on_mount: [{ChatappWeb.UserAuth, :ensure_authenticated}] do
-      live "/users/settings", UserSettingsLive, :edit
-      live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
-    end
-  end
 
   scope "/", ChatappWeb do
     pipe_through [:browser]
 
     delete "/users/log_out", UserSessionController, :delete
 
-    live_session :current_user,
-      on_mount: [{ChatappWeb.UserAuth, :mount_current_user}] do
-      live "/users/confirm/:token", UserConfirmationLive, :edit
-      live "/users/confirm", UserConfirmationInstructionsLive, :new
-    end
   end
 end

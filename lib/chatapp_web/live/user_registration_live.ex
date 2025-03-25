@@ -29,11 +29,11 @@ defmodule ChatappWeb.UserRegistrationLive do
           Oops, something went wrong! Please check the errors below.
         </.error>
 
-        <.input field={@form[:email]} type="email" label="Email" required />
+        <.input field={@form[:username]} type="text" label="Username" required />
 
         <.input field={@form[:password]} type="password" label="Password" required />
         <div class="text-sm text-gray-600 mb-3">
-          Password must be at least 12 characters long
+          Password must be at least 8 characters long
         </div>
 
         <:actions>
@@ -57,19 +57,13 @@ defmodule ChatappWeb.UserRegistrationLive do
   end
 
   def handle_event("save", %{"user" => user_params}, socket) do
-    IO.puts("Registration attempt with email: #{user_params["email"]}")
+    IO.puts("Registration attempt with username: #{user_params["username"]}")
     IO.puts("Password length: #{String.length(user_params["password"] || "")}")
 
     case Accounts.register_user(user_params) do
-      {:ok, user} ->
+      {:ok, _user} ->
         IO.puts("Registration successful!")
-        {:ok, _} =
-          Accounts.deliver_user_confirmation_instructions(
-            user,
-            &url(~p"/users/confirm/#{&1}")
-          )
-
-        # Redirect to login page instead of using trigger_submit
+        # User is auto-confirmed, redirect directly to login
         {:noreply,
          socket
          |> put_flash(:info, "User created successfully. Please log in.")

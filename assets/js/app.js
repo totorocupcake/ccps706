@@ -44,11 +44,10 @@ window.addEventListener('DOMContentLoaded', () => {
     const nameInput = document.getElementById('name');
     const messageList = document.getElementById('message-list');
     
-    if (messageInput && nameInput) {
+    if (messageInput) {
       messageInput.addEventListener('keypress', event => {
         if (event.keyCode === 13) {
           channel.push('new_message', {
-            name: nameInput.value,
             message: messageInput.value
           });
           messageInput.value = '';
