@@ -1,5 +1,6 @@
 defmodule ChatappWeb.DefaultChannel do
   use ChatappWeb, :channel
+  alias ChatappWeb.Presence
 
   @impl true
   def join("default:lobby", payload, socket) do
@@ -66,6 +67,14 @@ defmodule ChatappWeb.DefaultChannel do
     spawn(fn -> save_message(system_message) end)
 
     push(socket, "new_message", system_message)
+
+    {:ok, _} =
+      Presence.track(socket, socket.assigns.user_id, %{
+        online_at: inspect(System.system_time(:second)),
+        username: username
+      })
+
+    push(socket, "presence_state", Presence.list(socket))
 
     {:noreply, socket}
   end

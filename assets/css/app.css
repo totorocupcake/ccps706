@@ -15,3 +15,11 @@
     width: 100%; /* Full width of its parent */
     max-width: 800px; /* Optional: Set a max-width */
   }
+
+  #users-list {
+    border: 1px solid #777;
+    height: 400px;
+    padding: 10px;
+    overflow: scroll;
+    margin-bottom: 50px;
+  }

@@ -41,8 +41,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // Set up UI event handlers
     const messageInput = document.getElementById('message');
-    const nameInput = document.getElementById('name');
     const messageList = document.getElementById('message-list');
+    const usersList = document.getElementById('users-list');
     
     if (messageInput) {
       messageInput.addEventListener('keypress', event => {
@@ -61,6 +61,42 @@ window.addEventListener('DOMContentLoaded', () => {
         messageList.scrollTop = messageList.scrollHeight;
       });
     }
+
+    if (usersList) {
+      let currentState = {};
+
+      const renderUsers = (state) => {
+        usersList.innerHTML = ''; // Clear current list
+        Object.entries(state).forEach(([user_id, user_data]) => {
+          const meta = user_data.metas[0] || {};
+          usersList.innerHTML += `<div><b>${meta.username || user_id}</b></div>`;
+        });
+        usersList.scrollTop = usersList.scrollHeight;
+      };
+
+      channel.on("presence_state", state => {
+        currentState = state;
+        renderUsers(state);
+      });
+      
+      channel.on("presence_diff", diff => {
+        Object.entries(diff).forEach(([user_id, change]) => {
+          
+          if (diff.joins && Object.keys(diff.joins).length > 0) {
+            Object.entries(diff.joins).forEach(([user_id, user_data]) => {
+              currentState[user_id] = user_data;
+            });
+          }
+          
+          if (diff.leaves && Object.keys(diff.leaves).length > 0) {
+            Object.entries(diff.leaves).forEach(([user_id, user_data]) => {
+              delete currentState[user_id];
+            });
+          }
+        });
+        renderUsers(currentState);
+        });
+    }
     
     // Join the channel
     channel.join()
@@ -71,10 +107,7 @@ window.addEventListener('DOMContentLoaded', () => {
     window.socket = socket;
     window.channel = channel;
   }
-});
 
-// Debug form submission
-window.addEventListener("DOMContentLoaded", function() {
   const form = document.getElementById("registration_form");
   if (form) {
     console.log("Registration form found");
@@ -83,4 +116,5 @@ window.addEventListener("DOMContentLoaded", function() {
       console.log(e);
     });
   }
+
 });
