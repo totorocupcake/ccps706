@@ -23,6 +23,7 @@ defmodule Chatapp.Message do
       limit: ^limit
     )
     |> Chatapp.Repo.all()
+    |> Enum.reverse()
   end
 
 
