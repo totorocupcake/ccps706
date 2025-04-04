@@ -66,7 +66,7 @@ defmodule ChatappWeb.DefaultChannel do
 
     spawn(fn -> save_message(system_message) end)
 
-    push(socket, "new_message", system_message)
+    broadcast(socket, "new_message", system_message)
 
     {:ok, _} =
       Presence.track(socket, socket.assigns.user_id, %{
