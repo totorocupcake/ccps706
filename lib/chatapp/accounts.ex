@@ -10,34 +10,12 @@ defmodule Chatapp.Accounts do
 
   ## Database getters
 
-  @doc """
-  Gets a user by email.
 
-  ## Examples
-
-      iex> get_user_by_email("foo@example.com")
-      %User{}
-
-      iex> get_user_by_email("unknown@example.com")
-      nil
-
-  """
   def get_user_by_username(username) when is_binary(username) do
     Repo.get_by(User, username: username)
   end
 
-  @doc """
-  Gets a user by email and password.
 
-  ## Examples
-
-      iex> get_user_by_email_and_password("foo@example.com", "correct_password")
-      %User{}
-
-      iex> get_user_by_email_and_password("foo@example.com", "invalid_password")
-      nil
-
-  """
   def get_user_by_username_and_password(username, password)
       when is_binary(username) and is_binary(password) do
     user = Repo.get_by(User, username: username)

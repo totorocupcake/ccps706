@@ -58,7 +58,14 @@ defmodule ChatappWeb.DefaultChannel do
         "Someone"
     end
 
-    push(socket, "new_message", %{name: "System", message: "#{username} joined the chat"})
+    system_message = %{
+      name: "System",
+      message: "#{username} joined the chat"
+    }
+
+    spawn(fn -> save_message(system_message) end)
+
+    push(socket, "new_message", system_message)
 
     {:noreply, socket}
   end

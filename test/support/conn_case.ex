@@ -28,6 +28,7 @@ defmodule ChatappWeb.ConnCase do
       import Plug.Conn
       import Phoenix.ConnTest
       import ChatappWeb.ConnCase
+      import Phoenix.LiveViewTest.HTMLAssertions
     end
   end
 

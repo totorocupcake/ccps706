@@ -10,3 +10,8 @@
     overflow: scroll;
     margin-bottom: 50px;
   }
+
+  #message {
+    width: 100%; /* Full width of its parent */
+    max-width: 800px; /* Optional: Set a max-width */
+  }

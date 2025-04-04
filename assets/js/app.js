@@ -38,7 +38,7 @@ window.addEventListener('DOMContentLoaded', () => {
     
     // Create and join channel
     const channel = socket.channel('default:lobby', {});
-    
+
     // Set up UI event handlers
     const messageInput = document.getElementById('message');
     const nameInput = document.getElementById('name');

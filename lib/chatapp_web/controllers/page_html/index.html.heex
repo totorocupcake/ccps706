@@ -1,16 +1,22 @@
-<!-- If you're using a standard Phoenix view -->
-<div class="logout-container">
-  <.form :let={f} for={%{}} action="/users/log_out" method="delete">
-  <button type="submit">Log out</button>
-  </.form>
-</div>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chatroom App</title>
+      <div class="logout-container">
+        <.form :let={f} for={%{}} action="/users/log_out" method="delete">
+        <button type="submit">Log out</button>
+        </.form>
+      </div>
+  </head>
 
-<div id="chat-area">
-  <div id='message-list' class='row'>
-  </div>
-  <div class='row form-group'>
-    <div class='col-md-9'>
-      <input type='text' id='message' class='form-control' placeholder='Message' />
-    </div>
-  </div>
-</div>
+  <body>
+    <div id="chat-area">
+      <div id='message-list' class='row'>
+      </div>
+      <div class='row form-group'>
+          <input type='text' id='message' class='form-control' placeholder='Press enter to send message' />
+        </div>
+      </div>
+  </body>
+  
+</html>
