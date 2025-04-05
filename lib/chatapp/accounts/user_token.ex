@@ -3,13 +3,10 @@ defmodule Chatapp.Accounts.UserToken do
   import Ecto.Query
   alias Chatapp.Accounts.UserToken
 
-  @hash_algorithm :sha256
   @rand_size 32
 
   # It is very important to keep the reset password token expiry short,
   # since someone with access to the email may take over the account.
-  @confirm_validity_in_days 7
-  @change_email_validity_in_days 7
   @session_validity_in_days 60
 
   schema "users_tokens" do
