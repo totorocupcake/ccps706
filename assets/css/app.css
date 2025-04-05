@@ -1,25 +1,101 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+/* Base styles */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
 
-/* This file is for your main application CSS */
+body {
+  display: grid;
+  grid-template-rows: 50px calc(100vh - 50px); /* Hardcoded header height */
+  height: 100vh;
+  width: 100vw;
+}
+
+.header {
+  grid-row: 1;
+  height: 50px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 15px;
+  background-color: #f1f1f1;
+}
+
+.main-container {
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: calc(100% - 250px) 250px; /* Hardcoded sidebar width */
+  height: calc(100vh - 50px); /* Full height minus header */
+  overflow: hidden;
+}
+
+#chat-area {
+  grid-column: 1;
+  display: grid;
+  grid-template-rows: calc(100% - 60px) 60px; /* Hardcoded input area height */
+  padding: 10px;
+  height: calc(80vh - 50px);
+  overflow: hidden;
+}
+
 #message-list {
-    border: 1px solid #777;
-    height: 400px;
-    padding: 10px;
-    overflow: scroll;
-    margin-bottom: 50px;
-  }
+  grid-row: 1;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  padding: 10px;
+  height: calc(100% - 20px); /* Full height minus padding */
+}
 
-  #message {
-    width: 100%; /* Full width of its parent */
-    max-width: 800px; /* Optional: Set a max-width */
-  }
+.form-group {
+  grid-row: 2;
+  margin: 0;
+  height: 40px;
+}
 
-  #users-list {
-    border: 1px solid #777;
-    height: 400px;
-    padding: 10px;
-    overflow: scroll;
-    margin-bottom: 50px;
-  }
+.form-control {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  height: 38px;
+}
+
+.sidebar {
+  grid-column: 2;
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-left: 1px solid #ddd;
+  display: grid;
+  grid-template-rows: 40px calc(100% - 40px); /* Hardcoded header height */
+  height: calc(100vh - 50px);
+  overflow: hidden;
+}
+
+.sidebar-header {
+  grid-row: 1;
+  font-weight: bold;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #ddd;
+  height: 30px;
+}
+
+#users-list {
+  grid-row: 2;
+  overflow-y: auto;
+  height: calc(100% - 45px); /* Height minus header and padding */
+}
+
+/* Message styling */
+#message-list .message {
+  margin-bottom: 8px;
+  word-wrap: break-word;
+}
+
+/* Ensure button styling */
+button {
+  padding: 6px 12px;
+  cursor: pointer;
+}

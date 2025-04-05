@@ -2,26 +2,34 @@
 <html>
   <head>
     <title>Chatroom App</title>
-      <div class="logout-container">
-        <.form :let={f} for={%{}} action="/users/log_out" method="delete">
-        <button type="submit">Log out</button>
-        </.form>
-      </div>
+    <link rel="stylesheet" href="/css/app.css">
   </head>
 
   <body>
-    <div id="chat-area">
-      <div id='message-list' class='row'>
+    <div class="header">
+      <div class="logout-container">
+        <.form :let={f} for={%{}} action="/users/log_out" method="delete">
+          <button type="submit">Log out</button>
+        </.form>
       </div>
-      <div class='row form-group'>
-          <input type='text' id='message' class='form-control' placeholder='Press enter to send message' />
+    </div>
+    
+    <div class="main-container">
+      <div id="chat-area">
+        <div id="message-list">
+          <!-- Messages will appear here -->
         </div>
-      <div id='users-list' class='row'>
+        <div class="form-group">
+          <input type="text" id="message" class="form-control" placeholder="Press enter to send message" />
+        </div>
       </div>
+      
+      <div class="sidebar">
+        <div class="sidebar-header">Online Users</div>
+        <div id="users-list">
+          <!-- User list will appear here -->
+        </div>
       </div>
-
-      
-      
+    </div>
   </body>
-  
 </html>
