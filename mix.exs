@@ -60,7 +60,7 @@ defmodule Chatapp.MixProject do
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
       {:mime, "~> 2.0.6"},
-      {:decimal, "~> 2.3.0"},
+      {:decimal, "~> 2.3.0"}
     ]
   end
 
